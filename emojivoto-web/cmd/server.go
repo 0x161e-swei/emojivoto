@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"contrib.go.opencensus.io/exporter/ocagent"
+	"github.com/edgelesssys/ego/marble"
 	pb "github.com/edgelesssys/emojivoto/emojivoto-web/gen/proto"
 	"github.com/edgelesssys/emojivoto/emojivoto-web/web"
-	"github.com/edgelesssys/ego/marble"
 	"go.opencensus.io/plugin/ocgrpc"
 	"go.opencensus.io/trace"
 	"google.golang.org/grpc"
@@ -50,19 +50,11 @@ func main() {
 	}
 	trace.RegisterExporter(oce)
 
-	// get gRPC config
-	clientCfg, err := marble.GetTLSConfig(false)
-	if err != nil {
-		log.Fatalf("Failed to retrieve gRPC TLS config from ego")
-	}
-	// create creds
-	clientCreds := credentials.NewTLS(clientCfg)
-
-	votingSvcConn := openGrpcClientConnection(votingsvcHost, clientCreds)
+	votingSvcConn := openGrpcClientConnection(votingsvcHost)
 	votingClient := pb.NewVotingServiceClient(votingSvcConn)
 	defer votingSvcConn.Close()
 
-	emojiSvcConn := openGrpcClientConnection(emojisvcHost, clientCreds)
+	emojiSvcConn := openGrpcClientConnection(emojisvcHost)
 	emojiSvcClient := pb.NewEmojiServiceClient(emojiSvcConn)
 	defer emojiSvcConn.Close()
 
@@ -84,11 +76,11 @@ func main() {
 	}
 }
 
-func openGrpcClientConnection(host string, creds credentials.TransportCredentials) *grpc.ClientConn {
+func openGrpcClientConnection(host string) *grpc.ClientConn {
 	log.Printf("Connecting to [%s]", host)
 	conn, err := grpc.Dial(
 		host,
-		grpc.WithTransportCredentials(creds),
+		grpc.WithInsecure(),
 		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)))
 
 	if err != nil {

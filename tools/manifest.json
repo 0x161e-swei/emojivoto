@@ -30,11 +30,14 @@
 					"WEB_PORT": "4433",
 					"WEB_CERT": "{{ pem .Secrets.web_cert_shared.Cert }}",
 					"WEB_CERT_KEY": "{{ pem .Secrets.web_cert_shared.Private }}",
-				  	"EMOJISVC_HOST": "emoji-svc.emojivoto:8080",
-				  	"VOTINGSVC_HOST": "voting-svc.emojivoto:8080",
-				  	"INDEX_BUNDLE": "/edg/hostfs/dist/index_bundle.js"
+					"EMOJISVC_HOST": "emoji-svc.emojivoto:8080",
+					"VOTINGSVC_HOST": "voting-svc.emojivoto:8080",
+					"INDEX_BUNDLE": "/edg/hostfs/dist/index_bundle.js"
 				}
-			}
+			},
+			"TLS": [
+				"web"
+			]
 		},
 		"emoji-svc": {
 			"Package": "emoji-svc",
@@ -58,7 +61,11 @@
 		}
 	},
 	"Clients": {
-		"owner": [9,9,9]
+		"owner": [
+			9,
+			9,
+			9
+		]
 	},
 	"Secrets": {
 		"web_cert_shared": {
@@ -68,10 +75,26 @@
 			"Cert": {
 				"Subject": {
 					"CommonName": "localhost",
-					"DNSNames": ["localhost"]
+					"DNSNames": [
+						"localhost"
+					]
 				}
 			},
 			"ValidFor": 7
+		}
+	},
+	"TLS": {
+		"web": {
+			"Outgoing": [
+				{
+					"Port": "8080",
+					"Addr": "emoji-svc.emojivoto"
+				},
+				{
+					"Port": "8080",
+					"Addr": "voting-svc.emojivoto"
+				}
+			]
 		}
 	}
 }
