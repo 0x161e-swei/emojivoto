@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"log"
 	"os"
 	"time"
@@ -23,7 +22,6 @@ var (
 	indexBundle          = os.Getenv("INDEX_BUNDLE")
 	webpackDevServerHost = os.Getenv("WEBPACK_DEV_SERVER")
 	ocagentHost          = os.Getenv("OC_AGENT_HOST")
-	tlsServer            = os.Getenv("EDG_TLS_SERVER")
 )
 
 func main() {
@@ -58,22 +56,8 @@ func main() {
 	emojiSvcClient := pb.NewEmojiServiceClient(emojiSvcConn)
 	defer emojiSvcConn.Close()
 
-	if tlsServer == "enabled" {
-		// Use a different certificate for the web server
-		cert := []byte(os.Getenv("WEB_CERT"))
-		privk := []byte(os.Getenv("WEB_CERT_KEY"))
+	web.StartServerNoTLS(webPort, webpackDevServerHost, indexBundle, emojiSvcClient, votingClient)
 
-		tlsCert, err := tls.X509KeyPair(cert, privk)
-		if err != nil {
-			log.Fatalf("cannot create TLS cert: %v", err)
-		}
-		webTLSCfg := &tls.Config{
-			Certificates: []tls.Certificate{tlsCert},
-		}
-		web.StartServer(webPort, webpackDevServerHost, indexBundle, emojiSvcClient, votingClient, webTLSCfg)
-	} else {
-		web.StartServerNoTLS(webPort, webpackDevServerHost, indexBundle, emojiSvcClient, votingClient)
-	}
 }
 
 func openGrpcClientConnection(host string) *grpc.ClientConn {

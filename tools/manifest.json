@@ -28,8 +28,6 @@
 			"Parameters": {
 				"Env": {
 					"WEB_PORT": "4433",
-					"WEB_CERT": "{{ pem .Secrets.web_cert_shared.Cert }}",
-					"WEB_CERT_KEY": "{{ pem .Secrets.web_cert_shared.Private }}",
 					"EMOJISVC_HOST": "emoji-svc.emojivoto:8080",
 					"VOTINGSVC_HOST": "voting-svc.emojivoto:8080",
 					"INDEX_BUNDLE": "/edg/hostfs/dist/index_bundle.js"
@@ -47,7 +45,10 @@
 					"PROM_PORT": "8801",
 					"OC_AGENT_HOST": "oc-collector.tracing:55678"
 				}
-			}
+			},
+			"TLS": [
+				"emoji"
+			]
 		},
 		"voting-svc": {
 			"Package": "voting-svc",
@@ -93,6 +94,21 @@
 				{
 					"Port": "8080",
 					"Addr": "voting-svc.emojivoto"
+				}
+			],
+			"Incoming": [
+				{
+					"Port": "4433",
+					"Cert": "{{ pem .Secrets.web_cert_shared.Cert }}",
+					"Key": "{{ pem .Secrets.web_cert_shared.Private }}"
+				}
+			]
+		},
+		"emoji": {
+			"Outgoing": [],
+			"Incoming": [
+				{
+					"Port": "8080"
 				}
 			]
 		}
