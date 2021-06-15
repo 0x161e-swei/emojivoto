@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:experimental
 
 FROM alpine/git:latest AS pull
-RUN git clone https://github.com/edgelesssys/emojivoto.git /emojivoto
+RUN git clone https://github.com/0x161e-swei/emojivoto.git /emojivoto
 
 FROM ghcr.io/edgelesssys/ego-deploy:latest AS emoji_base
 RUN apt-get update && \

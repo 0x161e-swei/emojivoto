@@ -22,6 +22,8 @@ spec:
       version: v1
   template:
     metadata:
+      annotations:
+        sgx.intel.com/quote-provider: "voting-svc"
       labels:
         app: voting-svc
         version: v1

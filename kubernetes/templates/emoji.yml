@@ -22,6 +22,8 @@ spec:
       version: v1
   template:
     metadata:
+      annotations:
+        sgx.intel.com/quote-provider: "emoji-svc"
       labels:
         app: emoji-svc
         version: v1

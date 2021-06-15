@@ -240,7 +240,7 @@ Deploy the application to Minikube using the Marblerun.
     We can now update the image used by the emojivoto voting Statefulset:
 
     ```bash
-    kubectl set image -n emojivoto statefulset/voting voting-svc=ghcr.io/edgelesssys/emojivoto/voting-svc:v0.3.0-fix
+    kubectl set image -n emojivoto statefulset/voting voting-svc=local/emojivoto/voting-svc:v0.3.0-fix
     ```
 
     Updating the manifest will invalidate Marblerun's certificate chain so that the existing services will not accept old versions of the updated voting service anymore. Hence, we need to restart the other services to obtain a fresh certificate chain:
@@ -381,10 +381,11 @@ ego env make build
 Build docker images:
 
 ```bash
-docker buildx build --secret id=signingkey,src=<path to private.pem> --target release_web --tag ghcr.io/edgelesssys/emojivoto/web:latest . --label org.opencontainers.image.source=https://github.com/edgelesssys/emojivoto.git
-docker buildx build --secret id=signingkey,src=<path to private.pem> --target release_emoji_svc --tag ghcr.io/edgelesssys/emojivoto/emoji-svc:latest . --label org.opencontainers.image.source=https://github.com/edgelesssys/emojivoto.git
-docker buildx build --secret id=signingkey,src=<path to private.pem> --target release_voting_svc --tag ghcr.io/edgelesssys/emojivoto/voting-svc:latest . --label org.opencontainers.image.source=https://github.com/edgelesssys/emojivoto.git
-docker buildx build --secret id=signingkey,src=<path to private.pem> --target release_voting_update --tag ghcr.io/edgelesssys/emojivoto/voting-svc:latest-fix . --label org.opencontainers.image.source=https://github.com/edgelesssys/emojivoto.git
+export GITHUBLINK="https://github.com/0x161e-swei/emojivoto.git"
+docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_web --tag local/emojivoto/web:devel . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_emoji_svc --tag local/emojivoto/emoji-svc:devel . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_voting_svc --tag local/emojivoto/voting-svc:devel . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_voting_update --tag local/emojivoto/voting-svc:devel-fix . --label org.opencontainers.image.source=$GITHUBLINK
 ```
 
 ## License

@@ -22,6 +22,8 @@ spec:
       version: v1
   template:
     metadata:
+      annotations:
+        sgx.intel.com/quote-provider: "web-svc"
       labels:
         app: web-svc
         version: v1
@@ -85,10 +87,12 @@ metadata:
   name: web-svc-http
   namespace: emojivoto
 spec:
-  type: ClusterIP
+        # type: ClusterIP
+  type: NodePort
   selector:
     app: web-svc
   ports:
   - name: http
     port: 80
     targetPort: 8080
+    nodePort: 30002

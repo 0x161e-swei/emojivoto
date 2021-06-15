@@ -417,7 +417,7 @@ func StartServer(webPort, webpackDevServer, indexBundle string, emojiServiceClie
 		Handler:   nil,
 		TLSConfig: tlsConfig,
 	}
-	go http.ListenAndServe(":8080", http.HandlerFunc(redirect))
+	go http.ListenAndServe(":8080", nil) // http.HandlerFunc(redirect))
 	err := server.ListenAndServeTLS("", "")
 	if err != nil {
 		panic(err)
