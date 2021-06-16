@@ -1,0 +1,25 @@
+imagePullSecrets:
+  - name: regcred
+
+imagePullPolicy: Always
+
+resources:
+  requests:
+    cpu: 100m
+
+simulation:
+  OE_SIMULATION: "0"
+
+web:
+  image: ghcr.io/edgelesssys/emojivoto/web
+  imageVersion: v0.3.0
+  tlsServer: disabled 
+
+emoji:
+  image: ghcr.io/edgelesssys/emojivoto/emoji-svc
+  imageVersion: v0.3.0
+
+voting:
+  image: ghcr.io/edgelesssys/emojivoto/voting-svc
+  imageVersion: v0.3.0
+

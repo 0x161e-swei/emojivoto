@@ -25,6 +25,12 @@ RUN --mount=type=secret,id=signingkey,dst=/emojivoto/emojivoto-web/private.pem,r
     --mount=type=secret,id=signingkey,dst=/emojivoto/emojivoto-emoji-svc/private.pem,required=true \
     --mount=type=secret,id=signingkey,dst=/emojivoto/emojivoto-voting-svc/private.pem,required=true \
     ego env make build
+RUN curl -sL https://github.com/edgelesssys/edgelessrt/releases/download/v0.2.3/edgelessrt_0.2.3_amd64.deb -o edgelessrt.deb &&\
+    apt install ./edgelessrt.deb build-essential libssl-dev
+RUN source /opt/edgelessrt/share/openenclave/openenclaverc && \
+    oesign eradump -e /emojivoto/emojivoto-voting-svc/target/emojivoto-voting-svc && \
+    oesign eradump -e /emojivoto/emojivoto-emoji-svc/target/emojivoto-emoji-svc && \
+    oesign eradump -e /emojivoto/emojivoto-web/target/emojivoto-web
 
 FROM ghcr.io/edgelesssys/ego-dev:latest AS patch_build
 RUN go get github.com/golang/protobuf/protoc-gen-go && \

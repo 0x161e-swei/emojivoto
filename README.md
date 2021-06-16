@@ -382,10 +382,10 @@ Build docker images:
 
 ```bash
 export GITHUBLINK="https://github.com/0x161e-swei/emojivoto.git"
-docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_web --tag local/emojivoto/web:devel . --label org.opencontainers.image.source=$GITHUBLINK
-docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_emoji_svc --tag local/emojivoto/emoji-svc:devel . --label org.opencontainers.image.source=$GITHUBLINK
-docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_voting_svc --tag local/emojivoto/voting-svc:devel . --label org.opencontainers.image.source=$GITHUBLINK
-docker buildx build --secret id=signingkey,src=$HOME/.ssh/id.pem --target release_voting_update --tag local/emojivoto/voting-svc:devel-fix . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=example_private.pem --target release_web --tag local/emojivoto/web:devel . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=example_private.pem --target release_emoji_svc --tag local/emojivoto/emoji-svc:devel . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=example_private.pem --target release_voting_svc --tag local/emojivoto/voting-svc:devel . --label org.opencontainers.image.source=$GITHUBLINK
+docker buildx build --secret id=signingkey,src=example_private.pem --target release_voting_update --tag local/emojivoto/voting-svc:devel-fix . --label org.opencontainers.image.source=$GITHUBLINK
 ```
 
 ## License

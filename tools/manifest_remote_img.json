@@ -4,22 +4,19 @@
 			"Debug": true,
 			"SecurityVersion": 1,
 			"ProductID": 4,
-			"UniqueID": "a1deffe12c53a17b0d1bb934a3a65637b45a78367ac6b0812c89acca0c2cf1c9",
-			"SignerID": "1396b8328321316ef16f548554ebd74df2ca65e6ca25977fed27d976407d7eba"
+			"SignerID": "43361affedeb75affee9baec7e054a5e14883213e5a121b67d74a0e12e9d2b7a"
 		},
 		"emoji-svc": {
 			"Debug": true,
 			"SecurityVersion": 1,
 			"ProductID": 5,
-			"UniqueID": "2be793bf76e10fa7f4abb0598f271b0b8528ce5d1149a9d57696070c28d8603f",
-			"SignerID": "1396b8328321316ef16f548554ebd74df2ca65e6ca25977fed27d976407d7eba"
+			"SignerID": "43361affedeb75affee9baec7e054a5e14883213e5a121b67d74a0e12e9d2b7a"
 		},
 		"voting-svc": {
 			"Debug": true,
 			"SecurityVersion": 1,
 			"ProductID": 6,
-			"UniqueID": "3d840316938d7858a38a8383f3207debb97a50345b276bc6dee23ff57acc7cb5",
-			"SignerID": "1396b8328321316ef16f548554ebd74df2ca65e6ca25977fed27d976407d7eba"
+			"SignerID": "43361affedeb75affee9baec7e054a5e14883213e5a121b67d74a0e12e9d2b7a"
 		}
 	},
 	"Infrastructures": {

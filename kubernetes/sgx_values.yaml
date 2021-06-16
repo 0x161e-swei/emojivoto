@@ -1,7 +1,7 @@
 imagePullSecrets:
   - name: regcred
 
-imagePullPolicy: Always
+imagePullPolicy: IfNotPresent
 
 resources:
   requests:
@@ -11,15 +11,15 @@ simulation:
   OE_SIMULATION: "0"
 
 web:
-  image: ghcr.io/edgelesssys/emojivoto/web
-  imageVersion: v0.3.0
+  image: local/emojivoto/web
+  imageVersion: devel
   tlsServer: enabled
 
 emoji:
-  image: ghcr.io/edgelesssys/emojivoto/emoji-svc
-  imageVersion: v0.3.0
+  image: local/emojivoto/emoji-svc
+  imageVersion: devel
 
 voting:
-  image: ghcr.io/edgelesssys/emojivoto/voting-svc
-  imageVersion: v0.3.0
+  image: local/emojivoto/voting-svc
+  imageVersion: devel
 
